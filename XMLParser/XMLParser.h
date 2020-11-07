@@ -4,19 +4,18 @@
 #include "../HashTable/HashTable.h"
 #include "../pugixml/pugixml.hpp"
 #include <iostream>
+#include "../Model/Grafo/Plantilla Grafo/GrafoPaises.h"
 using namespace std;
 
 class XMLParser{
 
     private:
-        HashTable *tablaDatos;
+        GrafoPaises * datosPaises; //Grafo de Paises
+        const char* path;
         
     public:
-        XMLParser(const char* pPath);
-        void iniciarParse();
-        string getId(string pCoordenada);
-        string getColor(string pID);
-        list<string> getCoordenadas();
+        XMLParser(const char* pPath); // Constructor
+        void iniciarParse(); // Parseo del archivo
 };
 
 #endif /* XMLParser_H */

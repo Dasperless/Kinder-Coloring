@@ -1,34 +1,33 @@
 #include "XMLParser.h"
 
 XMLParser::XMLParser(const char* pPath){
-    this->tablaDatos= new HashTable(211);
+    datosPaises = new GrafoPaises();
+    this->path=pPath;
 }
 
+/*
+* Iniciar el parseo del archivo segun el path.
+*/
 void XMLParser::iniciarParse(){
     
-    pugi::xml_document doc;
-    pugi::xml_parse_result result = doc.load_file("world.svg");
+    pugi::xml_document doc; // inicialización del documento
+    pugi::xml_parse_result result = doc.load_file(path); // Leer el documento
     cout<<result.description()<<endl;
+
+    // Abrir el nodo svg
     pugi::xml_node svgNode = doc.child("svg");
+
+    // Variables para almacenar datos
     string id;
     string coordenada;
     string color;
+
+    // Ciclo en el cual se obtiene los ids, coordenadas y colores.
     for(pugi::xml_node nodo= svgNode.child("path"); nodo; nodo = nodo.next_sibling("path")){
         id = nodo.attribute("id").value();
         coordenada =nodo.attribute("d").value();
         color = nodo.attribute("style").value();
-        this->tablaDatos->insertar(coordenada,id,color);
+        this->datosPaises->insertaNodo(id,color,coordenada);
     }
 }
 
-string XMLParser::getColor(string pID){
-    return this->tablaDatos->getColor(pID);
-}
-
-string XMLParser::getId(string pCoordenada){
-    return this->tablaDatos->getID(pCoordenada);
-}
-
-list<string> XMLParser::getCoordenadas(){
-    return this->tablaDatos->obtenerCoordenadas();
-}
