@@ -1,6 +1,5 @@
 #include "XMLParser.h"
 
-
 XMLParser::XMLParser(const char* pPath){
     this->tablaDatos= new HashTable(211);
 }
@@ -8,7 +7,7 @@ XMLParser::XMLParser(const char* pPath){
 void XMLParser::iniciarParse(){
     
     pugi::xml_document doc;
-    pugi::xml_parse_result result = doc.load_file("../ArchivosXML/world.svg");
+    pugi::xml_parse_result result = doc.load_file("world.svg");
     cout<<result.description()<<endl;
     pugi::xml_node svgNode = doc.child("svg");
     string id;
