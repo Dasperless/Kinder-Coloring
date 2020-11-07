@@ -10,10 +10,11 @@
 
 /**
  * Inserta nodos en el grafo.
- * Recibe como parametro el puntero de un NodoPais
+ * Recibe como parametro el id, el color y las coordenadas del pais.
 */
-	void GrafoPaises::insertaNodo(NodoPais* pNodo){
-		listaPaises.push_back(pNodo);
+	void GrafoPaises::insertaNodo(string pIdPais,string pColorPais,string pCoordenadas){
+        NodoPais *nodoInsertar = new NodoPais(pIdPais, pColorPais, pCoordenadas);
+		listaPaises.push_back(nodoInsertar);
 	}
 
 /**
