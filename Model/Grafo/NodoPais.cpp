@@ -7,9 +7,10 @@
 /**
  * Constructor de la clase NodoPais
 */
-NodoPais::NodoPais(string pIdPais, string pColorPais, string ){
+NodoPais::NodoPais(string pIdPais, string pColorPais, string pCoordenadas ){
 	setIdPais(pIdPais);
 	setColorPais(pColorPais);
+    setCoordenadas(pCoordenadas);
 }	
 /**
  * Inserta Los paises colindantes en ambas listas.
