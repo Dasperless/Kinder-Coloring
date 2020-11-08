@@ -1,11 +1,17 @@
-KINDER-COLORING: HashTable/HashTable.o pugixml/pugixml.o XMLParser/XMLParser.o
-	g++ HashTable/HashTable.o pugixml/pugixml.o XMLParser/XMLParser.o -o colorear
+KINDER-COLORING: Model/pugixml/pugixml.o Model/XMLParser/XMLParser.o Model/Grafo/NodoPais.o Model/Grafo/GrafoPaises.o
+	g++ Model/pugixml/pugixml.o Model/XMLParser/XMLParser.o Model/Grafo/NodoPais.o Model/Grafo/GrafoPaises.o -o colorear
 
-HashTable.o: HashTable/HashTable.cpp
-	g++ -c HashTable/HashTable.cpp
-XMLParser.o: XMLParser/XMLParser.cpp
-	g++ -c XMLParser/XMLParser.cpp
-pugixml.o: pugixml/pugixml.cpp
-	g++ -c pugixml/pugixml.cpp
+GrafoPaises: Model/Grafo/GrafoPaises.cpp
+	g++ -c Model/Grafo/GrafoPaises.cpp
+
+NodoPais: Model/Grafo/NodoPais.cpp
+	g++ -c Model/Grafo/NodoPais.cpp
+
+XMLParser: Model/XMLParser/XMLParser.cpp
+	g++ -c Model/XMLParser/XMLParser.cpp
+
+pugixml: Model/pugixml/pugixml.cpp
+	g++ -c Model/pugixml/pugixml.cpp
+	
 clean:
-	rm *.o colorear
+	rm *.o colorear.exe
