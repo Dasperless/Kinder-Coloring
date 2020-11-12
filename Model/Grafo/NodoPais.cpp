@@ -3,86 +3,131 @@
  * Implementacion de la clase nodo.
  */
 #include "Plantilla Grafo/NodoPais.h"
+#include "../String Parser/StringParser.cpp"
 
 /**
- * Constructor de la clase NodoPais
-*/
+ * @brief Construye un nevo objecto de tipo nodoPais
+ * 
+ * @param pIdPais 		
+ * @param pColorPais 
+ * @param pCoordenadas 
+ */
 NodoPais::NodoPais(string pIdPais, string pColorPais, string pCoordenadas ){
 	setIdPais(pIdPais);
 	setColorPais(pColorPais);
-    setCoordenadas(pCoordenadas);
+	setCoordenadas(pCoordenadas);
 }	
+
 /**
- * Inserta Los paises colindantes en ambas listas.
- * Recibe un puntero del pais colindante.
+ * @brief Inserta un pais colindante
+ * 
+ * @param pPaisColindante puntero del pais colindante.
  */
-	void NodoPais::insertarPaisColindante(NodoPais* pPaisColindante){
-		pPaisColindante->getListaPaiseColindantes().push_back(this);	//Inserta en pPaiscolindante el pais actual.
-		paisesColindates.push_back(pPaisColindante);					//Inserta el pais colindante a la lista.
-	}
+void NodoPais::insertarPaisColindante(NodoPais* pPaisColindante){
+	pPaisColindante->getListaPaiseColindantes().push_back(this);	//Inserta en pPaiscolindante el pais actual.
+	paisesColindates.push_back(pPaisColindante);					//Inserta el pais colindante a la lista.
+}
 
 /**
- * Setea el color del pais
- * Recibe como parametro el color del pais, debe ser hexadecimal.
- */	
-	void NodoPais::setColorPais(string pColorPais){
-		colorPais = pColorPais;
-	}
-
-/**
- * Setea el nombre ID de un pais
- * Recibe como parametro nombre del pais.
+ * @brief Establece el color del pais.
+ * 
+ * @param pColorPais El color a establecer.
  */
-	void NodoPais::setIdPais(string pIdPais){
-		idPais = pIdPais;
-	}
+void NodoPais::setColorPais(string pColorPais){
+	colorPais = pColorPais;
+}
 
 /**
- * Setea si el nodo ha sido visitado
- * Recibe como parametro un booleano, True si ha sido visidado
- * False en caso contrario.
+ * @brief Establece el ID del pais.
+ * 
+ * @param pIdPais El nombre del pais.
  */
-	void NodoPais::setVisitado(bool pVisitado){
-		visitado = pVisitado;
-	}
+void NodoPais::setIdPais(string pIdPais){
+	idPais = pIdPais;
+}
 
 /**
- * Setea las coordenadas del nodo.
- * Recibe como parametro un string con las coordenadas.
+ * @brief Establece si el nodo ha sido visitado o no.
+ * 
+ * @param pVisitado True si ha sido visitado, False en caso contrairio.
  */
-	void NodoPais::setCoordenadas(string pCoordenadas){
-		coordenadas = pCoordenadas;
-	}    
+void NodoPais::setVisitado(bool pVisitado){
+	visitado = pVisitado;
+}
+
 /**
- *Retorna un puntero de la lista de paises colindantes. 
+ * @brief Establece las coordenadas del nodo
+ * 
+ * @param pCoordenadas String con coordenadas del svg.
  */
-	vector<NodoPais*> NodoPais::getListaPaiseColindantes(){
-		return paisesColindates;
+void NodoPais::setCoordenadas(string pCoordenadas){
+	StringParser *parser = new StringParser();
+	string coordenadasParseadas = parser->parsearCoordenadas(pCoordenadas);
+	vector<string> splitCoordenadas = parser->splitString(coordenadasParseadas, ' ');
+
+	float valorX = 0;
+	float valorY = 0;
+	for(int i = 0; i < splitCoordenadas.size(); i++){
+		vector<string> splitXY = parser->splitString(splitCoordenadas[i], ',');
+		valorX += stof(splitXY[0]);
+		valorY += stof(splitXY[1]);
+		coordsX.push_back(valorX);
+		coordsY.push_back(valorY);
 	}
-/**
- *Retorna el id nombre del pais 
- */	
-	string NodoPais::getIdNombrePais(){
-		return idPais;
-	}
+}
 
 /**
- *Retorna True si el pais ha sido visitado, False en caso contrario.
- */	
-	bool NodoPais::isVisitado(){
-		return visitado;
-	}
+ * @brief Retorna el puntero de la lista de paises colindantes.
+ * 
+ * @return vector<NodoPais*> 
+ */
+vector<NodoPais*> NodoPais::getListaPaiseColindantes(){
+	return paisesColindates;
+}
 
 /**
- *Retorna el color del pais.
- */	
-	string NodoPais::getColorPais(){
-		return colorPais;
-	}
+ * @brief Retorna el id del pais.
+ * 
+ * @return string 
+ */
+string NodoPais::getIdNombrePais(){
+	return idPais;
+}
 
 /**
- *Retorna el color del pais.
- */	
-	string NodoPais::getCoordenadas(){
-		return coordenadas;
-	}    
+ * @brief Retorna si el pais ha sido visitado
+ * 
+ * @return true 
+ * @return false
+ */
+bool NodoPais::isVisitado(){
+	return visitado;
+}
+
+/**
+ * @brief Retorna el color del pais.
+ * 
+ * @return string 
+ */
+string NodoPais::getColorPais(){
+	return colorPais;
+}
+
+/**
+ * @brief  Retorna un vector con las coordenadas X
+ * 
+ * @return vector<float> 
+ */
+vector<float> NodoPais::getCoordenadasX(){
+	return coordsX;
+}    
+
+/**
+ * @brief  Retorna un vector con las coordenadas Y
+ * 
+ * @return vector<float> 
+ */
+vector<float> NodoPais::getCoordenadasY(){
+	return coordsY;
+}    
+
