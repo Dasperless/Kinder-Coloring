@@ -54,10 +54,3 @@ void XMLParser::ModificarColor(string pID, string color){
     }
     doc.save_file(path,"\t",pugi::format_indent_attributes);
 }
-int main(){
-    for(int i =0; i<5;i++){
-        cout<<i<<endl;
-        Sleep(1000);
-    }
-
-}
