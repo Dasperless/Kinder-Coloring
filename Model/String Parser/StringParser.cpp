@@ -26,10 +26,11 @@ string StringParser::eliminarComandosCoordenadas(string pCoordenadas){
  */
 string StringParser::eliminarEspaciosExtra(string pString){
 	string stringSinEspaciosExtra = "";
-	for(int i = 0; i < pString.size(); i++){
+	int stringSize = pString.size();
+	for(int i = 0; i < stringSize; i++){
 		char caracterActual = pString.at(i);
 		if( caracterActual == ' '){
-			if(i != 0 && i + 1 < pString.size()){
+			if(i != 0 && i + 1 < stringSize){
 				if(pString.at(i + 1) != ' ')
 					stringSinEspaciosExtra += caracterActual;
 			}
