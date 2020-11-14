@@ -67,13 +67,26 @@ void NodoPais::setCoordenadas(string pCoordenadas){
 
 	float valorX = 0;
 	float valorY = 0;
-	for(int i = 0; i < splitCoordenadas.size(); i++){
+	int tamStringCoordenadas = splitCoordenadas.size();
+	for(int i = 0; i < tamStringCoordenadas; i++){
 		vector<string> splitXY = parser->splitString(splitCoordenadas[i], ',');
 		valorX += stof(splitXY[0]);
 		valorY += stof(splitXY[1]);
+		asignarMinMaxCoordXY(valorX,valorY);
 		coordsX.push_back(valorX);
 		coordsY.push_back(valorY);
 	}
+}
+
+void NodoPais::asignarMinMaxCoordXY(float pValorX, float pValorY){
+	if(maxCoordX < pValorX)
+		maxCoordX = pValorX;
+	else if(minCoordX > pValorX)
+		minCoordX = pValorX;
+	if(maxCoordY < pValorY)
+		maxCoordY = pValorY;
+	else if(minCoordY > pValorY)
+		minCoordY = pValorY;
 }
 
 /**
@@ -129,5 +142,41 @@ vector<float> NodoPais::getCoordenadasX(){
  */
 vector<float> NodoPais::getCoordenadasY(){
 	return coordsY;
-}    
+}   
+
+/**
+ * @brief Obitne la coordenada más grande en X
+ * 
+ * @return int 
+ */
+float NodoPais::getMaxCoordX(){
+	return maxCoordX;
+}
+
+/**
+ * @brief OBtiene la coordenadas más grande en Y
+ * 
+ * @return int 
+ */
+float NodoPais::getMaxCoordY(){
+	return maxCoordY;
+}
+
+/**
+ * @brief Obtiene la coordenada más pequeña en X
+ * 
+ * @return int 
+ */
+float NodoPais::getMinCoordX(){
+	return minCoordX;
+}
+
+/**
+ * @brief Obtiene la coordenada más pequeña en Y
+ * 
+ * @return int 
+ */
+float NodoPais::getMinCoordY(){
+	return minCoordY;
+}
 
