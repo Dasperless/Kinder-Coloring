@@ -3,7 +3,9 @@
 class Bucket
 {
 private:
-	/* data */
+	int rangoX = 0;
+	int rangoY = 0;
+	
 public:
 	Bucket(/* args */);
 	~Bucket();
