@@ -14,10 +14,10 @@ private:
 	vector<NodoPais *> paisesColindates;	//Vector de paises colindantes.
 	vector<float> coordsX;                  //Vector con las cordenadas X.
 	vector<float> coordsY;                  //Vector con las coordenadas Y.
-	float maxCoordX = 0;						//Maximo coordenada X
-	float maxCoordY = 0;						//Minimo coordenada Y
-	float minCoordX = INT_MAX;						//Maximo coordenada Y
-	float minCoordY = INT_MAX;						//Minimo coordenada X
+	float maxCoordX = 0;					//Maximo coordenada X
+	float maxCoordY = 0;					//Minimo coordenada Y
+	float minCoordX = INT_MAX;				//Maximo coordenada Y
+	float minCoordY = INT_MAX;				//Minimo coordenada X
 	string colorPais;						//Color del pais en hexadecimal.
 	bool visitado;							//Verifica si el nodo fue visitado.
 	
