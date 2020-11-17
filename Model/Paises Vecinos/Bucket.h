@@ -19,7 +19,8 @@ public:
 	int getMinRangoY();	
 	vector<NodoPais*> getBucketPaises();
 	void insertarPais(NodoPais *pPaisInsertar);
-	bool isInRange(int pMaxCoord, int pMinCoord);
+	bool isInRangeX(int pMaxCoordX, int pMinCoordX);
+	bool isInRangeY(int pMaxCoordY, int pMinCoordY);
 };
 Bucket::Bucket(int pMaxRangoX, int pMinRangoX, int pMaxRangoY, int pMinRangoY)
 {
@@ -48,9 +49,12 @@ void Bucket::insertarPais(NodoPais *pPaisInsertar){
 	paises.push_back(pPaisInsertar);
 }
 
-bool Bucket::isInRange(int pMaxCoord, int pMinCoord){
-	return (pMaxCoord>=minRangoX && pMinCoord<=maxRangoX);
+bool Bucket::isInRangeX(int pMaxCoordX, int pMinCoordX){
+	return (pMinCoordX >= minRangoX && pMaxCoordX <= maxRangoX);
 }
 
+bool Bucket::isInRangeY(int pMaxCoordY, int pMinCoordY){
+	return (pMinCoordY >= minRangoY && pMaxCoordY <= maxRangoY);
+}
 
 #endif

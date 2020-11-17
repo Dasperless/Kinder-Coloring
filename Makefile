@@ -9,5 +9,6 @@ plain: $(PROGRAM)
 
 nodeadcode: $(PROGRAM)
 	$(CC) $(CFLAGS) -Os -fdata-sections -ffunction-sections -o main $(PROGRAM) -Wl,-gc-sections
+	./main
 clean:
 	del *exe

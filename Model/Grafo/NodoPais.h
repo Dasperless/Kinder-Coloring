@@ -108,8 +108,12 @@ void NodoPais::setCoordenadas(string pCoordenadas){
 	int tamStringCoordenadas = splitCoordenadas.size();
 	for(int i = 0; i < tamStringCoordenadas; i++){
 		vector<string> splitXY = parser->splitString(splitCoordenadas[i], ',');
-		valorX += stof(splitXY[0]);
-		valorY += stof(splitXY[1]);
+		try {
+			valorX += stof(splitXY[0]);
+			valorY += stof(splitXY[1]);
+		}catch(const std::invalid_argument& ia){
+ 			std::cerr << "Invalid argument: " << ia.what() << '\n';
+		}
 		asignarMinMaxCoordXY(valorX,valorY);
 		coordsX.push_back(valorX);
 		coordsY.push_back(valorY);

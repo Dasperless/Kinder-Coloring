@@ -9,9 +9,10 @@
 using namespace std;
 int main()
 {
-	XMLParser *xml = new XMLParser("C:/Users/dvarg/Desktop/TEC/2020/Segundo Semestre/Análisis/Proyectos/Proyecto I/Kinder-Coloring/ArchivosXML/world.svg");
+	XMLParser *xml = new XMLParser("ArchivosXML/world.svg");
 	xml->iniciarParse();
 	GrafoPaises *g = xml->obtenerGrafo();
+	vector<NodoPais *>  nodos = g->obtenerListaNodos();
 	vector<Bucket *> b = g->obtenerBucket();
 	int bSize = b.size();
 	for(int i =0; i < bSize ;i++){

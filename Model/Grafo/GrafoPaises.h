@@ -25,14 +25,16 @@ public:
  * 
  */
 GrafoPaises::GrafoPaises() {
-	int indiceX = 0;
-	int indiceY = 0;
+	int maxIndiceX = 0;
+	int maxIndiceY = 0;
+	int minIndiceX = 0;
+	int minIndiceY = 0;
 	for(int i = 0; i < 4; i++){
-		int tempIndiceX = indiceX;
-		int tempIndiceY = indiceX;
-		indiceX += 500;
-		indiceY += 250;
-		Bucket *nuevoBucket = new Bucket(tempIndiceX, indiceX, tempIndiceY,indiceY);
+		minIndiceX = maxIndiceX;
+		minIndiceY = maxIndiceY;
+		maxIndiceX += 500;
+		maxIndiceY += 250;
+		Bucket *nuevoBucket = new Bucket(maxIndiceX, minIndiceX, maxIndiceY, minIndiceY);
 		bucketPaisesVecinos.push_back(nuevoBucket);
 	}
 }
@@ -86,11 +88,10 @@ vector<Bucket *> GrafoPaises::obtenerBucket(){
 
 		for(int indiceBucket = 0; indiceBucket < tamVectorBucket; indiceBucket++){
 			Bucket *bucketActual = bucketPaisesVecinos.at(indiceBucket);
-			if(bucketActual->isInRange(maxCoordXPais,minCoordXPais) && bucketActual->isInRange(maxCoordYPais,minCoordYPais)){
+			if(bucketActual->isInRangeX(maxCoordXPais,minCoordXPais) || bucketActual->isInRangeY(maxCoordYPais,minCoordYPais)){
 				bucketActual->insertarPais(pNodoPais);
 			}
 		}
 	}
-
 
 #endif 

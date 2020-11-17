@@ -32,6 +32,8 @@ string StringParser::eliminarComandosCoordenadas(string pCoordenadas){
 	string stringSinComandos = pCoordenadas;
 
 	stringSinComandos.erase(remove(stringSinComandos.begin(), stringSinComandos.end(), 'm'), stringSinComandos.end());
+	stringSinComandos.erase(remove(stringSinComandos.begin(), stringSinComandos.end(), 'M'), stringSinComandos.end());
+	stringSinComandos.erase(remove(stringSinComandos.begin(), stringSinComandos.end(), 'l'), stringSinComandos.end());
 	stringSinComandos.erase(remove(stringSinComandos.begin(), stringSinComandos.end(), 'z'), stringSinComandos.end());	
 	
 	return stringSinComandos;
