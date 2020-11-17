@@ -1,8 +1,25 @@
-/**
- * Implementacion de la clase GrafoPaises.
-*/
-#include "Plantilla Grafo/GrafoPaises.h"
+#ifndef GrafoPaises_hpp 
+#define GrafoPaises_hpp 
 
+#include "NodoPais.h"
+#include <vector>
+#include "../Paises Vecinos/Bucket.h"
+/**
+ *Clase que contiene los nodos que representan los paises del svg .
+*/
+class GrafoPaises
+{
+private:
+	vector<NodoPais *> listaPaises;			//Lista de los nodo pais.
+	vector<Bucket *> bucketPaisesVecinos;		//Buckets con nodos pais dentro de un rango.
+public:
+	GrafoPaises();															//Constructor de la clase
+	void insertaNodo(string pIdPais,string pColorPais,string pCoordenadas);	//Inserta un nodo pais en el grafo.
+	vector<NodoPais *> obtenerListaNodos();									//Obtiene la lista de nodos
+	void insertarNodoBucket(NodoPais *pNodoPais);
+	vector<Bucket *> obtenerBucket();
+	
+};
 /**
  * @brief Construye un objeto de tipo GrafoPaises
  * 
@@ -48,6 +65,15 @@ GrafoPaises::GrafoPaises() {
 	}
 
 /**
+ * @brief 
+ * 
+ * @return vector<Bucket *> 
+ */
+vector<Bucket *> GrafoPaises::obtenerBucket(){
+	return bucketPaisesVecinos;
+}
+
+/**
  * @brief Inserta en el bucket correspondiente un pais.
  * 
  */
@@ -66,3 +92,5 @@ GrafoPaises::GrafoPaises() {
 		}
 	}
 
+
+#endif 

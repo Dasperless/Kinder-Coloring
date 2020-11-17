@@ -3,7 +3,7 @@
 
 #include "../pugixml/pugixml.hpp"
 #include <iostream>
-#include "../Grafo/Plantilla Grafo/GrafoPaises.h"
+#include "../Grafo/GrafoPaises.h"
 using namespace std;
 
 class XMLParser{

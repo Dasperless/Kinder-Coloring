@@ -1,17 +1,13 @@
-KINDER-COLORING: Model/pugixml/pugixml.o Model/XMLParser/XMLParser.o Model/Grafo/NodoPais.o Model/Grafo/GrafoPaises.o
-	g++ Model/pugixml/pugixml.o Model/XMLParser/XMLParser.o Model/Grafo/NodoPais.o Model/Grafo/GrafoPaises.o -o colorear
+CC=g++
+CFLAGS=-Wall
+RESULTS=main.cpp nodeadcode
+PROGRAM = main.cpp
+all: $(RESULTS)
 
-GrafoPaises: Model/Grafo/GrafoPaises.cpp
-	g++ -c Model/Grafo/GrafoPaises.cpp
+plain: $(PROGRAM)
+	$(CC) $(CFLAGS) -o plain $(PROGRAM)
 
-NodoPais: Model/Grafo/NodoPais.cpp
-	g++ -c Model/Grafo/NodoPais.cpp
-
-XMLParser: Model/XMLParser/XMLParser.cpp
-	g++ -c Model/XMLParser/XMLParser.cpp
-
-pugixml: Model/pugixml/pugixml.cpp
-	g++ -c Model/pugixml/pugixml.cpp
-	
+nodeadcode: $(PROGRAM)
+	$(CC) $(CFLAGS) -Os -fdata-sections -ffunction-sections -o main $(PROGRAM) -Wl,-gc-sections
 clean:
-	rm *.o colorear.exe
+	del *exe
