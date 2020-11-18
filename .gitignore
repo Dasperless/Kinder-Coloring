@@ -5,3 +5,4 @@ makefile
 main.exe
 *.json
 *.exe
+main.cpp

@@ -11,36 +11,37 @@ using namespace std;
 class NodoPais
 {
 private:
-	string idPais;							//Nombre del pais.
-	vector<NodoPais *> paisesColindates;	//Vector de paises colindantes.
-	vector<float> coordsX;                  //Vector con las cordenadas X.
-	vector<float> coordsY;                  //Vector con las coordenadas Y.
-	float maxCoordX = 0;					//Maximo coordenada X
-	float maxCoordY = 0;					//Minimo coordenada Y
-	float minCoordX = INT_MAX;				//Maximo coordenada Y
-	float minCoordY = INT_MAX;				//Minimo coordenada X
-	string colorPais;						//Color del pais en hexadecimal.
-	bool visitado;							//Verifica si el nodo fue visitado.
-	
+	string idPais;						 //Nombre del pais.
+	vector<NodoPais *> paisesVecinos; //Vector de paises vecinos.
+	vector<float> coordsX;				 //Vector con las cordenadas X.
+	vector<float> coordsY;				 //Vector con las coordenadas Y.
+	float maxCoordX = 0;				 //Maximo coordenada X
+	float maxCoordY = 0;				 //Minimo coordenada Y
+	float minCoordX = INT_MAX;			 //Maximo coordenada Y
+	float minCoordY = INT_MAX;			 //Minimo coordenada X
+	string colorPais;					 //Color del pais en hexadecimal.
+	bool visitado;						 //Verifica si el nodo fue visitado.
+
 public:
-	NodoPais(string pIdPais, string pColorPais, string pCoordenadas);	//Constructor.
-	void insertarPaisColindante(NodoPais *pPaisColindante);				//Inserta un pais colindante.
-	void setColorPais(string pColorPais);								//Setea el color del pais.
-	void setVisitado(bool pVisited);									//Setea si el pais ha sido visitado.
-	void setIdPais(string pIdPais);										//Setea el id del pais.
-	void setCoordenadas(string pCoordenas);								//Setea las coordenadas.
+	NodoPais(string pIdPais, string pColorPais, string pCoordenadas); //Constructor.
+	void insertarPaisVecino(NodoPais *pPaisVecino);			  //Inserta un pais colindante.
+	void setColorPais(string pColorPais);							  //Setea el color del pais.
+	void setVisitado(bool pVisited);								  //Setea si el pais ha sido visitado.
+	void setIdPais(string pIdPais);									  //Setea el id del pais.
+	void setCoordenadas(string pCoordenas);							  //Setea las coordenadas.
 	void asignarMinMaxCoordXY(float pValorX, float pValorY);
-	string getColorPais();												//Obtiene el color del pais.
-	bool isVisitado();						    						//Obtiene si el pais ha sido visitado.
-	string getIdNombrePais();											//Obtiene el id del pais.
-	vector<NodoPais *> getListaPaiseColindantes();						//Retorna la lista de paises colindantes.
-	vector<float> getCoordenadasX();									//Obtiene las coordenadas.
+	string getColorPais();						   //Obtiene el color del pais.
+	bool isVisitado();							   //Obtiene si el pais ha sido visitado.
+	string getIdNombrePais();					   //Obtiene el id del pais.
+	vector<NodoPais *> getListaPaiseVecinos(); //Retorna la lista de paises vecinos.
+	vector<float> getCoordenadasX();			   //Obtiene las coordenadas.
 	vector<float> getCoordenadasY();
 	float getMaxCoordX();
 	float getMaxCoordY();
 	float getMinCoordX();
 	float getMinCoordY();
-
+	bool isVecino(NodoPais *pNodoPais); //Verifica si un pais es vecino o no.
+	bool isInRange(int pInicio, int pFin);
 };
 
 /**
@@ -50,20 +51,26 @@ public:
  * @param pColorPais 
  * @param pCoordenadas 
  */
-NodoPais::NodoPais(string pIdPais, string pColorPais, string pCoordenadas ){
+NodoPais::NodoPais(string pIdPais, string pColorPais, string pCoordenadas)
+{
 	setIdPais(pIdPais);
 	setColorPais(pColorPais);
 	setCoordenadas(pCoordenadas);
-}	
+}
 
 /**
- * @brief Inserta un pais colindante
+ * @brief Inserta un pais vecino en el nodo actual y en el que se inserta.
  * 
- * @param pPaisColindante puntero del pais colindante.
+ * @param pPaisVecino puntero del pais vecino.
  */
-void NodoPais::insertarPaisColindante(NodoPais* pPaisColindante){
-	pPaisColindante->getListaPaiseColindantes().push_back(this);	//Inserta en pPaiscolindante el pais actual.
-	paisesColindates.push_back(pPaisColindante);					//Inserta el pais colindante a la lista.
+void NodoPais::insertarPaisVecino(NodoPais *pPaisVecino)
+{
+	string nombre = pPaisVecino->getIdNombrePais();
+	vector<NodoPais*> listaVecinos = pPaisVecino->getListaPaiseVecinos();
+	if(find(listaVecinos.begin(), listaVecinos.end(), this) == listaVecinos.end())
+		listaVecinos.push_back(this); 						//Inserta en pPaisVecino el pais actual.
+	if(find(paisesVecinos.begin(), paisesVecinos.end(), pPaisVecino) == paisesVecinos.end())
+		paisesVecinos.push_back(pPaisVecino);				//Inserta el pais vecino a la lista.
 }
 
 /**
@@ -71,7 +78,8 @@ void NodoPais::insertarPaisColindante(NodoPais* pPaisColindante){
  * 
  * @param pColorPais El color a establecer.
  */
-void NodoPais::setColorPais(string pColorPais){
+void NodoPais::setColorPais(string pColorPais)
+{
 	colorPais = pColorPais;
 }
 
@@ -80,7 +88,8 @@ void NodoPais::setColorPais(string pColorPais){
  * 
  * @param pIdPais El nombre del pais.
  */
-void NodoPais::setIdPais(string pIdPais){
+void NodoPais::setIdPais(string pIdPais)
+{
 	idPais = pIdPais;
 }
 
@@ -89,7 +98,8 @@ void NodoPais::setIdPais(string pIdPais){
  * 
  * @param pVisitado True si ha sido visitado, False en caso contrairio.
  */
-void NodoPais::setVisitado(bool pVisitado){
+void NodoPais::setVisitado(bool pVisitado)
+{
 	visitado = pVisitado;
 }
 
@@ -98,7 +108,8 @@ void NodoPais::setVisitado(bool pVisitado){
  * 
  * @param pCoordenadas String con coordenadas del svg.
  */
-void NodoPais::setCoordenadas(string pCoordenadas){
+void NodoPais::setCoordenadas(string pCoordenadas)
+{
 	StringParser *parser = new StringParser();
 	string coordenadasParseadas = parser->parsearCoordenadas(pCoordenadas);
 	vector<string> splitCoordenadas = parser->splitString(coordenadasParseadas, ' ');
@@ -106,38 +117,44 @@ void NodoPais::setCoordenadas(string pCoordenadas){
 	float valorX = 0;
 	float valorY = 0;
 	int tamStringCoordenadas = splitCoordenadas.size();
-	for(int i = 0; i < tamStringCoordenadas; i++){
+	for (int i = 0; i < tamStringCoordenadas; i++)
+	{
 		vector<string> splitXY = parser->splitString(splitCoordenadas[i], ',');
-		try {
+		try
+		{
 			valorX += stof(splitXY[0]);
 			valorY += stof(splitXY[1]);
-		}catch(const std::invalid_argument& ia){
- 			std::cerr << "Invalid argument: " << ia.what() << '\n';
 		}
-		asignarMinMaxCoordXY(valorX,valorY);
+		catch (const std::invalid_argument &ia)
+		{
+			std::cerr << "Invalid argument: " << ia.what() << '\n';
+		}
+		asignarMinMaxCoordXY(valorX, valorY);
 		coordsX.push_back(valorX);
 		coordsY.push_back(valorY);
 	}
 }
 
-void NodoPais::asignarMinMaxCoordXY(float pValorX, float pValorY){
-	if(maxCoordX < pValorX)
+void NodoPais::asignarMinMaxCoordXY(float pValorX, float pValorY)
+{
+	if (maxCoordX < pValorX)
 		maxCoordX = pValorX;
-	else if(minCoordX > pValorX)
+	else if (minCoordX > pValorX)
 		minCoordX = pValorX;
-	if(maxCoordY < pValorY)
+	if (maxCoordY < pValorY)
 		maxCoordY = pValorY;
-	else if(minCoordY > pValorY)
+	else if (minCoordY > pValorY)
 		minCoordY = pValorY;
 }
 
 /**
- * @brief Retorna el puntero de la lista de paises colindantes.
+ * @brief Retorna el puntero de la lista de paises vecinos.
  * 
  * @return vector<NodoPais*> 
  */
-vector<NodoPais*> NodoPais::getListaPaiseColindantes(){
-	return paisesColindates;
+vector<NodoPais *> NodoPais::getListaPaiseVecinos()
+{
+	return paisesVecinos;
 }
 
 /**
@@ -145,7 +162,8 @@ vector<NodoPais*> NodoPais::getListaPaiseColindantes(){
  * 
  * @return string 
  */
-string NodoPais::getIdNombrePais(){
+string NodoPais::getIdNombrePais()
+{
 	return idPais;
 }
 
@@ -155,7 +173,8 @@ string NodoPais::getIdNombrePais(){
  * @return true 
  * @return false
  */
-bool NodoPais::isVisitado(){
+bool NodoPais::isVisitado()
+{
 	return visitado;
 }
 
@@ -164,7 +183,8 @@ bool NodoPais::isVisitado(){
  * 
  * @return string 
  */
-string NodoPais::getColorPais(){
+string NodoPais::getColorPais()
+{
 	return colorPais;
 }
 
@@ -173,25 +193,28 @@ string NodoPais::getColorPais(){
  * 
  * @return vector<float> 
  */
-vector<float> NodoPais::getCoordenadasX(){
+vector<float> NodoPais::getCoordenadasX()
+{
 	return coordsX;
-}    
+}
 
 /**
  * @brief  Retorna un vector con las coordenadas Y
  * 
  * @return vector<float> 
  */
-vector<float> NodoPais::getCoordenadasY(){
+vector<float> NodoPais::getCoordenadasY()
+{
 	return coordsY;
-}   
+}
 
 /**
  * @brief Obitne la coordenada más grande en X
  * 
  * @return int 
  */
-float NodoPais::getMaxCoordX(){
+float NodoPais::getMaxCoordX()
+{
 	return maxCoordX;
 }
 
@@ -200,7 +223,8 @@ float NodoPais::getMaxCoordX(){
  * 
  * @return int 
  */
-float NodoPais::getMaxCoordY(){
+float NodoPais::getMaxCoordY()
+{
 	return maxCoordY;
 }
 
@@ -209,7 +233,8 @@ float NodoPais::getMaxCoordY(){
  * 
  * @return int 
  */
-float NodoPais::getMinCoordX(){
+float NodoPais::getMinCoordX()
+{
 	return minCoordX;
 }
 
@@ -218,9 +243,24 @@ float NodoPais::getMinCoordX(){
  * 
  * @return int 
  */
-float NodoPais::getMinCoordY(){
+float NodoPais::getMinCoordY()
+{
 	return minCoordY;
 }
 
+bool NodoPais::isVecino(NodoPais *pNodoPais)
+{	
+	int restaMinCoordX = pNodoPais->getMinCoordX() - minCoordX;
+	int restaMaxCoordX = pNodoPais->getMaxCoordX() - maxCoordX;
+	int restaMinCoordY = pNodoPais->getMinCoordY() - minCoordY;
+	int restaMaxCoordY = pNodoPais->getMaxCoordY() - maxCoordY;
+	if(isInRange(restaMinCoordY,restaMaxCoordY)){
+		return true;
+	}
+	return false;
+}
 
+bool NodoPais::isInRange(int pInicio, int pFin){
+	return (pInicio >= -10 && pFin <= 10);
+}
 #endif
