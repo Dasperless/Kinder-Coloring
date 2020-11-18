@@ -1,7 +1,7 @@
 #include "XMLParser.h"
 #include <cstring>
 #include <windows.h>
-
+#include <list>
 XMLParser::XMLParser(const char* pPath){
     datosPaises = new GrafoPaises();
     this->path=pPath;
