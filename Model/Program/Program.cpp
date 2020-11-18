@@ -5,7 +5,7 @@ Program::Program(int pTiempoActualizar){
     this->Laziness = new LazinessXML(pTiempoActualizar, this->parseador);
     this->pintor = new Painter();
     this->sintetizador = new Sintetizador();
-};
+}
 
 
 
