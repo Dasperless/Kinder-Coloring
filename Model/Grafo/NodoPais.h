@@ -254,13 +254,17 @@ bool NodoPais::isVecino(NodoPais *pNodoPais)
 	int restaMaxCoordX = pNodoPais->getMaxCoordX() - maxCoordX;
 	int restaMinCoordY = pNodoPais->getMinCoordY() - minCoordY;
 	int restaMaxCoordY = pNodoPais->getMaxCoordY() - maxCoordY;
-	if(isInRange(restaMinCoordY,restaMaxCoordY)){
+	if(isInRange(restaMinCoordX, restaMaxCoordX) && isInRange(restaMinCoordY, restaMaxCoordY)){
 		return true;
 	}
 	return false;
 }
 
 bool NodoPais::isInRange(int pInicio, int pFin){
-	return (pInicio >= -10 && pFin <= 10);
+	int rango = 30;
+	if((pInicio >= -rango && pInicio <= rango) && (pFin >= -rango && pFin <= rango)){
+		return true;
+	}
+	return false;
 }
 #endif
