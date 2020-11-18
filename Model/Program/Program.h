@@ -18,7 +18,7 @@ class Program{
         Sintetizador* sintetizador; // Clase encargada de sintetizar la informacion
     public:
         // Constructor
-        Program();
+        Program(int tiempoActualizar);
         void pintar(); // Llama a la clase Painter para su funcion
         void escribirXML(); // Indica al XML que paises y colores cambiar
         XMLParser* getParseador(); //Para obtener los datos del archivo parseado
