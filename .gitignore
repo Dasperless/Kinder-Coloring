@@ -1,8 +1,6 @@
-
 .vscode/c_cpp_properties.json
 Makefile
 makefile
-main.exe
 *.json
 *.exe
 main.cpp
