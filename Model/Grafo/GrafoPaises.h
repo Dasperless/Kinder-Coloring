@@ -111,7 +111,7 @@ void GrafoPaises::procesarPaisesVecinos(vector<int> pindicesBucket, NodoPais *pN
 	{
 		indiceBucketActual = pindicesBucket.at(indiceBucketInsertado);			//Indice del bucket actual.
 		Bucket *bucketActual = bucketPaisesVecinos.at(indiceBucketActual);		//Bucket Actual.
-		listaPaisesBucket = bucketActual->getBucketPaises();					//Lista de paises del bucket actual.
+		listaPaisesBucket = bucketActual->getVectorPaises();					//Lista de paises del bucket actual.
 		tamListaPaisesBucket = listaPaisesBucket.size();
 		for (int indicePaisesBucket = 0; indicePaisesBucket < tamListaPaisesBucket; indicePaisesBucket++)
 		{
