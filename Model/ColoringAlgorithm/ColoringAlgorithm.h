@@ -1,7 +1,7 @@
 #ifndef COLORINGALGORITHM.H
 #define COLORINGALGORITHM.H
 
-#include "../Grafo/Plantilla Grafo/GrafoPaises.h"
+#include "../Grafo/GrafoPaises.h"
 #include<iostream>
 #include<list>
 
