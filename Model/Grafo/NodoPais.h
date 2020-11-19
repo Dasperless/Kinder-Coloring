@@ -11,37 +11,25 @@ using namespace std;
 class NodoPais
 {
 private:
-	string idPais;						 //Nombre del pais.
 	vector<NodoPais *> paisesVecinos; //Vector de paises vecinos.
-	vector<float> coordsX;				 //Vector con las cordenadas X.
-	vector<float> coordsY;				 //Vector con las coordenadas Y.
-	float maxCoordX = 0;				 //Maximo coordenada X
-	float maxCoordY = 0;				 //Minimo coordenada Y
-	float minCoordX = INT_MAX;			 //Maximo coordenada Y
-	float minCoordY = INT_MAX;			 //Minimo coordenada X
-	string colorPais;					 //Color del pais en hexadecimal.
-	bool visitado;						 //Verifica si el nodo fue visitado.
-
-public:
-	NodoPais(string pIdPais, string pColorPais, string pCoordenadas); //Constructor.
-	void insertarPaisVecino(NodoPais *pPaisVecino);			  //Inserta un pais colindante.
-	void setColorPais(string pColorPais);							  //Setea el color del pais.
-	void setVisitado(bool pVisited);								  //Setea si el pais ha sido visitado.
-	void setIdPais(string pIdPais);									  //Setea el id del pais.
-	void setCoordenadas(string pCoordenas);							  //Setea las coordenadas.
+	void setCoordenadas(string pCoordenadas);
 	void asignarMinMaxCoordXY(float pValorX, float pValorY);
-	string getColorPais();						   //Obtiene el color del pais.
-	bool isVisitado();							   //Obtiene si el pais ha sido visitado.
-	string getIdNombrePais();					   //Obtiene el id del pais.
-	vector<NodoPais *> getListaPaiseVecinos(); //Retorna la lista de paises vecinos.
-	vector<float> getCoordenadasX();			   //Obtiene las coordenadas.
-	vector<float> getCoordenadasY();
-	float getMaxCoordX();
-	float getMaxCoordY();
-	float getMinCoordX();
-	float getMinCoordY();
-	bool isVecino(NodoPais *pNodoPais); //Verifica si un pais es vecino o no.
+	void setColorNoPermitido(string pColor);
 	bool isInRange(int pInicio, int pFin);
+public:
+	string colorPais;		   //Color del pais en hexadecimal.
+	string idPais;			   //Nombre del pais.
+	vector<string> coloresNoPermitidos;
+
+	float maxCoordX = 0;	   //Maximo coordenada X
+	float maxCoordY = 0;	   //Minimo coordenada Y
+	float minCoordX = INT_MAX; //Maximo coordenada Y
+	float minCoordY = INT_MAX; //Minimo coordenada X
+
+	NodoPais(string pIdPais, string pColorPais, string pCoordenadas);	//Constructor.
+	void insertarPaisVecino(NodoPais *pPaisVecino);					 	//Inserta un pais colindante.
+	vector<NodoPais *> getListaPaiseVecinos();							//Retorna la lista de paises vecinos.
+	bool isVecino(NodoPais *pNodoPais);									//Verifica si un pais es vecino o no.
 };
 
 /**
@@ -53,8 +41,8 @@ public:
  */
 NodoPais::NodoPais(string pIdPais, string pColorPais, string pCoordenadas)
 {
-	setIdPais(pIdPais);
-	setColorPais(pColorPais);
+	idPais = pIdPais;
+	pColorPais = pColorPais;
 	setCoordenadas(pCoordenadas);
 }
 
@@ -65,42 +53,12 @@ NodoPais::NodoPais(string pIdPais, string pColorPais, string pCoordenadas)
  */
 void NodoPais::insertarPaisVecino(NodoPais *pPaisVecino)
 {
-	string nombre = pPaisVecino->getIdNombrePais();
-	vector<NodoPais*> listaVecinos = pPaisVecino->getListaPaiseVecinos();
-	if(find(listaVecinos.begin(), listaVecinos.end(), this) == listaVecinos.end())
-		listaVecinos.push_back(this); 						//Inserta en pPaisVecino el pais actual.
-	if(find(paisesVecinos.begin(), paisesVecinos.end(), pPaisVecino) == paisesVecinos.end())
-		paisesVecinos.push_back(pPaisVecino);				//Inserta el pais vecino a la lista.
-}
-
-/**
- * @brief Establece el color del pais.
- * 
- * @param pColorPais El color a establecer.
- */
-void NodoPais::setColorPais(string pColorPais)
-{
-	colorPais = pColorPais;
-}
-
-/**
- * @brief Establece el ID del pais.
- * 
- * @param pIdPais El nombre del pais.
- */
-void NodoPais::setIdPais(string pIdPais)
-{
-	idPais = pIdPais;
-}
-
-/**
- * @brief Establece si el nodo ha sido visitado o no.
- * 
- * @param pVisitado True si ha sido visitado, False en caso contrairio.
- */
-void NodoPais::setVisitado(bool pVisitado)
-{
-	visitado = pVisitado;
+	string nombre = pPaisVecino->idPais;
+	vector<NodoPais *> listaVecinos = pPaisVecino->getListaPaiseVecinos();
+	if (find(listaVecinos.begin(), listaVecinos.end(), this) == listaVecinos.end())
+		listaVecinos.push_back(this); //Inserta en pPaisVecino el pais actual.
+	if (find(paisesVecinos.begin(), paisesVecinos.end(), pPaisVecino) == paisesVecinos.end())
+		paisesVecinos.push_back(pPaisVecino); //Inserta el pais vecino a la lista.
 }
 
 /**
@@ -130,8 +88,6 @@ void NodoPais::setCoordenadas(string pCoordenadas)
 			std::cerr << "Invalid argument: " << ia.what() << '\n';
 		}
 		asignarMinMaxCoordXY(valorX, valorY);
-		coordsX.push_back(valorX);
-		coordsY.push_back(valorY);
 	}
 }
 
@@ -158,113 +114,46 @@ vector<NodoPais *> NodoPais::getListaPaiseVecinos()
 }
 
 /**
- * @brief Retorna el id del pais.
+ * @brief Verifica si un NodoPais es vecino.
  * 
- * @return string 
- */
-string NodoPais::getIdNombrePais()
-{
-	return idPais;
-}
-
-/**
- * @brief Retorna si el pais ha sido visitado
- * 
+ * @param pNodoPais 
  * @return true 
- * @return false
+ * @return false 
  */
-bool NodoPais::isVisitado()
-{
-	return visitado;
-}
-
-/**
- * @brief Retorna el color del pais.
- * 
- * @return string 
- */
-string NodoPais::getColorPais()
-{
-	return colorPais;
-}
-
-/**
- * @brief  Retorna un vector con las coordenadas X
- * 
- * @return vector<float> 
- */
-vector<float> NodoPais::getCoordenadasX()
-{
-	return coordsX;
-}
-
-/**
- * @brief  Retorna un vector con las coordenadas Y
- * 
- * @return vector<float> 
- */
-vector<float> NodoPais::getCoordenadasY()
-{
-	return coordsY;
-}
-
-/**
- * @brief Obitne la coordenada más grande en X
- * 
- * @return int 
- */
-float NodoPais::getMaxCoordX()
-{
-	return maxCoordX;
-}
-
-/**
- * @brief OBtiene la coordenadas más grande en Y
- * 
- * @return int 
- */
-float NodoPais::getMaxCoordY()
-{
-	return maxCoordY;
-}
-
-/**
- * @brief Obtiene la coordenada más pequeña en X
- * 
- * @return int 
- */
-float NodoPais::getMinCoordX()
-{
-	return minCoordX;
-}
-
-/**
- * @brief Obtiene la coordenada más pequeña en Y
- * 
- * @return int 
- */
-float NodoPais::getMinCoordY()
-{
-	return minCoordY;
-}
-
 bool NodoPais::isVecino(NodoPais *pNodoPais)
-{	
-	int restaMinCoordX = pNodoPais->getMinCoordX() - minCoordX;
-	int restaMaxCoordX = pNodoPais->getMaxCoordX() - maxCoordX;
-	int restaMinCoordY = pNodoPais->getMinCoordY() - minCoordY;
-	int restaMaxCoordY = pNodoPais->getMaxCoordY() - maxCoordY;
-	if(isInRange(restaMinCoordX, restaMaxCoordX) && isInRange(restaMinCoordY, restaMaxCoordY)){
+{
+	int restaMinCoordX = pNodoPais->minCoordX - minCoordX;
+	int restaMaxCoordX = pNodoPais->maxCoordX - maxCoordX;
+	int restaMinCoordY = pNodoPais->minCoordY - minCoordY;
+	int restaMaxCoordY = pNodoPais->maxCoordY - maxCoordY;
+	if (isInRange(restaMinCoordX, restaMaxCoordX) && isInRange(restaMinCoordY, restaMaxCoordY))
+	{
 		return true;
 	}
 	return false;
 }
 
-bool NodoPais::isInRange(int pInicio, int pFin){
+/**
+ * @brief Verifica si dos numeros estan dentro de un rango.
+ * 
+ * @param pInicio 
+ * @param pFin 
+ * @return true 
+ * @return false 
+ */
+bool NodoPais::isInRange(int pInicio, int pFin)
+{
 	int rango = 30;
-	if((pInicio >= -rango && pInicio <= rango) && (pFin >= -rango && pFin <= rango)){
+	if ((pInicio >= -rango && pInicio <= rango) && (pFin >= -rango && pFin <= rango))
+	{
 		return true;
 	}
 	return false;
+}
+
+void NodoPais::setColorNoPermitido(string pColor){
+	for(int indiceVector = 0; indiceVector < paisesVecinos.size(); indiceVector++){
+		paisesVecinos[indiceVector]->coloresNoPermitidos.push_back(pColor);
+	}
 }
 #endif
