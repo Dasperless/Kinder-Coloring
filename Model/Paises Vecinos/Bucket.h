@@ -5,14 +5,12 @@
 class Bucket
 {
 private:
-	int maxRangoX = 0;			//Rango maximo del bucket.
-	int minRangoX = 0;			//Rango minimo del bucket.
 	vector<NodoPais*> paises;
 	
 public:
+	int maxRangoX = 0;			//Rango maximo del bucket.
+	int minRangoX = 0;			//Rango minimo del bucket.
 	Bucket(int pMaxRangoX, int pMinRangoX);					//Constructor del objeto
-	int getMaxRangoX();										//Obtiene el rango maximo en x del Bucket.
-	int getMinRangoX();										//Obtiene el rango minimo en x del bucket
 	vector<NodoPais*> getVectorPaises();					//Obtiene un vector de los paises dentro del rango del bucket.
 	void insertarPais(NodoPais *pPaisInsertar);				//Inserta un nuevo pais al vector de paises.
 	bool isInRangeX(int pMaxCoordX, int pMinCoordX);		//Verifica si un pais se encuentra en el rango del Bucket.
@@ -28,25 +26,6 @@ Bucket::Bucket(int pMinRangoX,int pMaxRangoX)
 {
 	minRangoX = pMinRangoX;
 	maxRangoX = pMaxRangoX;
-}
-
-/**
- * @brief Obtiene el rango maximo en x del bucket.
- * 
- * @return int El rango maximo del bucket.
- */
-int Bucket::getMaxRangoX(){
-	return maxRangoX;
-}
-
-
-/**
- * @brief Obtiene el rango minimo en x del bucket.
- * 
- * @return int 	El rango minimo del bucket
- */
-int Bucket::getMinRangoX(){
-	return maxRangoX;
 }
 
 /**

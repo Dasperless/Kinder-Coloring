@@ -78,8 +78,8 @@ vector<Bucket *> GrafoPaises::obtenerBucket()
 void GrafoPaises::insertarNodoBucket(NodoPais *pNodoPais)
 {
 	int tamVectorBucket = bucketPaisesVecinos.size();
-	int maxCoordXPais = pNodoPais->getMaxCoordX();
-	int minCoordXPais = pNodoPais->getMinCoordX();
+	int maxCoordXPais = pNodoPais->maxCoordX;
+	int minCoordXPais = pNodoPais->minCoordX;
 	vector<int> BucketInsertado;
 	for (int indiceBucket = 0; indiceBucket < tamVectorBucket; indiceBucket++)
 	{
