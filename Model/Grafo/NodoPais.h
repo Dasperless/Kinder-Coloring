@@ -151,6 +151,11 @@ bool NodoPais::isInRange(int pInicio, int pFin)
 	return false;
 }
 
+/**
+ * @brief Establece un color no permitido a los paises vecinos.
+ * 
+ * @param pColor	El color que se desea establecer como no permitido.
+ */
 void NodoPais::setColorNoPermitido(string pColor){
 	for(int indiceVector = 0; indiceVector < paisesVecinos.size(); indiceVector++){
 		paisesVecinos[indiceVector]->coloresNoPermitidos.push_back(pColor);
