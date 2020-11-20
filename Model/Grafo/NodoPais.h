@@ -14,8 +14,8 @@ private:
 	vector<NodoPais *> paisesVecinos; //Vector de paises vecinos.
 	void setCoordenadas(string pCoordenadas);
 	void asignarMinMaxCoordXY(float pValorX, float pValorY);
-	void setColorNoPermitido(string pColor);
 	bool isInRange(int pInicio, int pFin);
+
 public:
 	string colorPais;		   //Color del pais en hexadecimal.
 	string idPais;			   //Nombre del pais.
@@ -30,6 +30,7 @@ public:
 	void insertarPaisVecino(NodoPais *pPaisVecino);					 	//Inserta un pais colindante.
 	vector<NodoPais *> getListaPaiseVecinos();							//Retorna la lista de paises vecinos.
 	bool isVecino(NodoPais *pNodoPais);									//Verifica si un pais es vecino o no.
+	void setColorNoPermitido(string pColor);
 };
 
 /**
