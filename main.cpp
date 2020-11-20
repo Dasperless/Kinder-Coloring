@@ -5,21 +5,19 @@
 #include "Model/Paises Vecinos/Bucket.h"
 #include "Model/pugixml/pugixml.cpp"
 #include "Model/XMLParser/XMLParser.cpp"
-#include "Model/Sintetizador/Sintetizador.h"
+#include "Model/DivideAndConquer/DivideAndConquer.cpp"
+#include "Model/ColoringAlgorithm/ColoringAlgorithm.cpp"
 using namespace std;
 int main()
 {
 	XMLParser *xml = new XMLParser("ArchivosXML/world.svg");
 	xml->iniciarParse();
 	GrafoPaises *g = xml->obtenerGrafo();
-	Sintetizador *s = new Sintetizador();
-	s->crearEstructura(g->obtenerListaNodos());	
-	// vector<NodoPais *>  nodos = g->obtenerListaNodos();
-	// vector<Bucket *> b = g->obtenerBucket();
-	// int bSize = b.size();
-	// for(int i =0; i < bSize ;i++){
-	// 	cout << b.at(i)->getVectorPaises().size()<<endl;;
-	// }
+	DivideAndConquer divide(g);
+	vector<NodoPais*> vectorR = divide.iniciarAlgoritmo(3);
+	/*for(auto x:vectorR){
+		xml->ModificarColor(x->idPais,x->colorPais);
+	}*/
 
 
 }

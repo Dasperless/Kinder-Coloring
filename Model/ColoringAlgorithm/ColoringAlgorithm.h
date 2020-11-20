@@ -1,5 +1,5 @@
-#ifndef COLORINGALGORITHM.H
-#define COLORINGALGORITHM.H
+#ifndef COLORINGALGORITHM_H
+#define COLORINGALGORITHM_H
 
 #include "../Grafo/GrafoPaises.h"
 #include<iostream>
@@ -21,4 +21,4 @@ class ColoringAlgorithm{
         GrafoPaises* getPaisesAProcesar();
         
 };
-#endif "COLORINGALGORITHM.H"
+#endif

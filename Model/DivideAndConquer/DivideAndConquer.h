@@ -1,5 +1,5 @@
-#ifndef DIVIDEANDCONQUER.H
-#define DIVIDEANDCONQUER.H
+#ifndef DIVIDEANDCONQUER_H
+#define DIVIDEANDCONQUER_H
 
 #include "../ColoringAlgorithm/ColoringAlgorithm.h"
 
@@ -8,9 +8,7 @@ class DivideAndConquer : public ColoringAlgorithm {
         int cantidadColores;
     public:
         DivideAndConquer(GrafoPaises* PaisesAProcesar);
-        void iniciarAlgoritmo(int);
-        void dividirGrafo(vector<NodoPais*> vectorNodos);
-        string verificarColorDisp(NodoPais* pPaisVerif);
-        bool colorRepetido(list<string> lista, string color);
+        vector<NodoPais*> iniciarAlgoritmo(int);
+        vector<NodoPais*> dividirGrafo(vector<NodoPais*> vectorNodos);
 };
-#endif "DIVIDEANDCONQUER.H"
+#endif
