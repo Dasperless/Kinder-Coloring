@@ -80,10 +80,11 @@ void GrafoPaises::insertarNodoBucket(NodoPais *pNodoPais)
 	int tamVectorBucket = bucketPaisesVecinos.size();
 	int maxCoordXPais = pNodoPais->maxCoordX;
 	int minCoordXPais = pNodoPais->minCoordX;
+	string nombre = pNodoPais->idPais;
 	vector<int> BucketInsertado;
 	for (int indiceBucket = 0; indiceBucket < tamVectorBucket; indiceBucket++)
 	{
-		Bucket *bucketActual = bucketPaisesVecinos.at(indiceBucket);
+		Bucket *bucketActual = bucketPaisesVecinos[indiceBucket];
 		if (bucketActual->isInRangeX(minCoordXPais, maxCoordXPais))
 		{
 			bucketActual->insertarPais(pNodoPais);
@@ -109,16 +110,17 @@ void GrafoPaises::procesarPaisesVecinos(vector<int> pindicesBucket, NodoPais *pN
 	NodoPais *paisActualListaPaises;
 	for (int indiceBucketInsertado = 0; indiceBucketInsertado < tamIndicesBucket; indiceBucketInsertado++)
 	{
-		indiceBucketActual = pindicesBucket.at(indiceBucketInsertado);			//Indice del bucket actual.
-		Bucket *bucketActual = bucketPaisesVecinos.at(indiceBucketActual);		//Bucket Actual.
+		indiceBucketActual = pindicesBucket[indiceBucketInsertado];			//Indice del bucket actual.
+		Bucket *bucketActual = bucketPaisesVecinos[indiceBucketActual];		//Bucket Actual.
 		listaPaisesBucket = bucketActual->getVectorPaises();					//Lista de paises del bucket actual.
 		tamListaPaisesBucket = listaPaisesBucket.size();
 		for (int indicePaisesBucket = 0; indicePaisesBucket < tamListaPaisesBucket; indicePaisesBucket++)
 		{
-			paisActualListaPaises = listaPaisesBucket.at(indicePaisesBucket);
+			paisActualListaPaises = listaPaisesBucket[indicePaisesBucket];
 			if (pNodoPais != paisActualListaPaises && pNodoPais->isVecino(paisActualListaPaises))
 			{
 				paisActualListaPaises->insertarPaisVecino(pNodoPais);
+				pNodoPais->insertarPaisVecino(paisActualListaPaises);
 			}
 		}
 	}
