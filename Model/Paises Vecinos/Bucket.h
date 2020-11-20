@@ -27,7 +27,6 @@ Bucket::Bucket(int pMinRangoX,int pMaxRangoX)
 	minRangoX = pMinRangoX;
 	maxRangoX = pMaxRangoX;
 }
-
 /**
  * @brief Obtiene un vector con los paises que pertenecen al bucket.
  * 
@@ -55,7 +54,7 @@ void Bucket::insertarPais(NodoPais *pPaisInsertar){
  * @return false 		El pais no se encuentra dentro del rango del bucket.
  */
 bool Bucket::isInRangeX(int pMinCoordX, int pMaxCoordX){
-	return ((pMinCoordX >= minRangoX && pMinCoordX <= maxRangoX) || pMaxCoordX <= maxRangoX);
+	return ((pMinCoordX >= minRangoX && pMinCoordX <= maxRangoX)||(pMaxCoordX >= minRangoX && pMaxCoordX <= maxRangoX));
 }
 
 #endif
