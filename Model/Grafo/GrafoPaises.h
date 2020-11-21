@@ -18,7 +18,7 @@ public:
 	vector<NodoPais *> obtenerListaNodos();									  		//Obtiene la lista de nodos
 	void insertarNodoBucket(NodoPais *pNodoPais);
 	vector<Bucket *> obtenerBucket();
-	void procesarPaisesVecinos(vector<int> pindicesBucket, NodoPais *pNodoPais);
+	void procesarPaisesVecinos(vector<Bucket*> pListaBuckets, NodoPais *pNodoPais);
 };
 /**
  * @brief Construye un objeto de tipo GrafoPaises
@@ -77,18 +77,16 @@ vector<Bucket *> GrafoPaises::obtenerBucket()
  */
 void GrafoPaises::insertarNodoBucket(NodoPais *pNodoPais)
 {
-	int tamVectorBucket = bucketPaisesVecinos.size();
 	int maxCoordXPais = pNodoPais->maxCoordX;
 	int minCoordXPais = pNodoPais->minCoordX;
 	string nombre = pNodoPais->idPais;
-	vector<int> BucketInsertado;
-	for (int indiceBucket = 0; indiceBucket < tamVectorBucket; indiceBucket++)
+	vector<Bucket*>  BucketInsertado;
+	for (auto bucketActual: bucketPaisesVecinos)
 	{
-		Bucket *bucketActual = bucketPaisesVecinos[indiceBucket];
 		if (bucketActual->isInRangeX(minCoordXPais, maxCoordXPais))
 		{
 			bucketActual->insertarPais(pNodoPais);
-			BucketInsertado.push_back(indiceBucket);
+			BucketInsertado.push_back(bucketActual);
 		}
 	}
 	procesarPaisesVecinos(BucketInsertado,pNodoPais);
@@ -97,30 +95,17 @@ void GrafoPaises::insertarNodoBucket(NodoPais *pNodoPais)
 /**
  * @brief Agrega los paises vecinos de un NodoPais
  * 
- * @param pindicesBucket	Vector con los bucket donde fue insertado el NodoPais.
+ * @param pListaBuckets	Vector con los bucket donde fue insertado el NodoPais.
  * @param pNodoPais 		El nodo que fue insertado.
  */
-void GrafoPaises::procesarPaisesVecinos(vector<int> pindicesBucket, NodoPais *pNodoPais)
+void GrafoPaises::procesarPaisesVecinos(vector<Bucket*>  pListaBuckets, NodoPais *pNodoPais)
 {
-	int tamIndicesBucket = pindicesBucket.size();		 //El tamaño del vector con la lista de indices donde se inserto el nodo pais.
-	int indiceBucketActual;								 //El de BucketPaisesVecinos Actual.
-	vector<NodoPais *> listaPaisesBucket;				 //Lista de paises del bucket actual.
-	int tamListaPaisesBucket;							 //Tamaño de la lista de paises bucket.
-
-	NodoPais *paisActualListaPaises;
-	for (int indiceBucketInsertado = 0; indiceBucketInsertado < tamIndicesBucket; indiceBucketInsertado++)
-	{
-		indiceBucketActual = pindicesBucket[indiceBucketInsertado];			//Indice del bucket actual.
-		Bucket *bucketActual = bucketPaisesVecinos[indiceBucketActual];		//Bucket Actual.
-		listaPaisesBucket = bucketActual->getVectorPaises();					//Lista de paises del bucket actual.
-		tamListaPaisesBucket = listaPaisesBucket.size();
-		for (int indicePaisesBucket = 0; indicePaisesBucket < tamListaPaisesBucket; indicePaisesBucket++)
-		{
-			paisActualListaPaises = listaPaisesBucket[indicePaisesBucket];
-			if (pNodoPais != paisActualListaPaises && pNodoPais->isVecino(paisActualListaPaises))
+	for(auto listaPaises:pListaBuckets){
+		for(auto paisActual:listaPaises->getVectorPaises()){
+			if (pNodoPais != paisActual && pNodoPais->isVecino(paisActual))
 			{
-				paisActualListaPaises->insertarPaisVecino(pNodoPais);
-				pNodoPais->insertarPaisVecino(paisActualListaPaises);
+				paisActual->insertarPaisVecino(pNodoPais);
+				pNodoPais->insertarPaisVecino(paisActual);
 			}
 		}
 	}

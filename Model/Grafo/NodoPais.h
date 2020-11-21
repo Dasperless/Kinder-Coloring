@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <math.h>
 #include "../String Parser/StringParser.h"
 #include <bits/stdc++.h>
 /**
@@ -21,7 +22,9 @@ public:
 	string colorPais;		   //Color del pais en hexadecimal.
 	string idPais;			   //Nombre del pais.
 	vector<string> coloresNoPermitidos;
-	
+	vector<float> coordsX;
+	vector<float> coordsY;
+
 	float maxCoordX = 0;	   //Maximo coordenada X
 	float maxCoordY = 0;	   //Minimo coordenada Y
 	float minCoordX = INT_MAX; //Maximo coordenada Y
@@ -80,15 +83,10 @@ void NodoPais::setCoordenadas(string pCoordenadas)
 	for (int i = 0; i < tamStringCoordenadas; i++)
 	{
 		vector<string> splitXY = parser->splitString(splitCoordenadas[i], ',');
-		try
-		{
-			valorX += stof(splitXY[0]);
-			valorY += stof(splitXY[1]);
-		}
-		catch (const std::invalid_argument &ia)
-		{
-			std::cerr << "Invalid argument: " << ia.what() << '\n';
-		}
+		valorX += stof(splitXY[0]);
+		valorY += stof(splitXY[1]);	
+		coordsX.push_back((int)valorX);
+		coordsY.push_back((int)valorY);
 		asignarMinMaxCoordXY(valorX, valorY);
 	}
 }
@@ -124,34 +122,21 @@ vector<NodoPais *> NodoPais::getListaPaiseVecinos()
  */
 bool NodoPais::isVecino(NodoPais *pNodoPais)
 {
-	int restaMaxCoordX = pNodoPais->maxCoordX - maxCoordX;
-	int restaMinCoordX = pNodoPais->minCoordX - minCoordX;
-	int restaMinCoordY = pNodoPais->minCoordY - minCoordY;
-	int restaMaxCoordY = pNodoPais->maxCoordY - maxCoordY;
-	if(isInRange(restaMinCoordX, restaMaxCoordX) && isInRange(restaMinCoordY, restaMaxCoordY))
+	vector<float> interCoordX;
+	vector<float> interCoordY;
+	sort(pNodoPais->coordsX.begin(), pNodoPais->coordsX.end());
+	sort(pNodoPais->coordsY.begin(), pNodoPais->coordsY.end());
+	sort(coordsX.begin(), coordsX.end());
+	sort(coordsY.begin(), coordsY.end());	
+    std::set_intersection(pNodoPais->coordsX.begin(),pNodoPais->coordsX.end(), coordsX.begin(),coordsX.end(),back_inserter(interCoordX));	
+	std::set_intersection(pNodoPais->coordsY.begin(),pNodoPais->coordsY.end(), coordsY.begin(),coordsY.end(),back_inserter(interCoordY));		
+	if(!interCoordX.empty() && !interCoordY.empty())
 	{
 		return true;
 	}
 	return false;
 }
 
-/**
- * @brief Verifica si dos numeros estan dentro de un rango.
- * 
- * @param pInicio 
- * @param pFin 
- * @return true 
- * @return false 
- */
-bool NodoPais::isInRange(int pInicio, int pFin)
-{
-	int rango = 30;
-	if ((pInicio >= -rango && pInicio <= rango) && (pFin >= -rango && pFin <= rango))
-	{
-		return true;
-	}
-	return false;
-}
 
 /**
  * @brief Establece
