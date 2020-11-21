@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include "../String Parser/StringParser.h"
+#include <bits/stdc++.h>
 /**
  * Clase Nodo que almacena los datos del SVG
  */
@@ -14,13 +15,13 @@ private:
 	vector<NodoPais *> paisesVecinos; //Vector de paises vecinos.
 	void setCoordenadas(string pCoordenadas);
 	void asignarMinMaxCoordXY(float pValorX, float pValorY);
-	void setColorNoPermitido(string pColor);
+	
 	bool isInRange(int pInicio, int pFin);
 public:
 	string colorPais;		   //Color del pais en hexadecimal.
 	string idPais;			   //Nombre del pais.
 	vector<string> coloresNoPermitidos;
-
+	
 	float maxCoordX = 0;	   //Maximo coordenada X
 	float maxCoordY = 0;	   //Minimo coordenada Y
 	float minCoordX = INT_MAX; //Maximo coordenada Y
@@ -30,6 +31,7 @@ public:
 	void insertarPaisVecino(NodoPais *pPaisVecino);					 	//Inserta un pais colindante.
 	vector<NodoPais *> getListaPaiseVecinos();							//Retorna la lista de paises vecinos.
 	bool isVecino(NodoPais *pNodoPais);									//Verifica si un pais es vecino o no.
+	void setColorNoPermitido(string pColor);
 };
 
 /**
@@ -42,7 +44,7 @@ public:
 NodoPais::NodoPais(string pIdPais, string pColorPais, string pCoordenadas)
 {
 	idPais = pIdPais;
-	pColorPais = pColorPais;
+	colorPais = pColorPais;
 	setCoordenadas(pCoordenadas);
 }
 
