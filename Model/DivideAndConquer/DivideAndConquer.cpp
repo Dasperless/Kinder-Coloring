@@ -42,7 +42,6 @@ vector<pair<string,string>> DivideAndConquer::dividirGrafo(vector<NodoPais*> vec
         }
         if(vectorReturn.empty()){ // Si no hay color disponible se deja el original y se retorna un vector vacio
             this->getPaisesNoColoreados()->insertaNodo(pais->idPais,pais->colorPais,"");
-            cout<<"entro"<<endl;
         } 
         return vectorReturn;
     }

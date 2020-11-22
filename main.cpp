@@ -7,15 +7,10 @@
 #include "Model/XMLParser/XMLParser.cpp"
 #include "Model/DivideAndConquer/DivideAndConquer.cpp"
 #include "Model/ColoringAlgorithm/ColoringAlgorithm.cpp"
+#include "Model/Program/Program.cpp"
 using namespace std;
 int main()
 {
-	XMLParser *xml = new XMLParser("ArchivosXML/world.svg");
-	xml->iniciarParse();
-	GrafoPaises *g = xml->obtenerGrafo();
-	DivideAndConquer divide(g);
-	vector<pair<string,string>> vectorAPintar = divide.iniciarAlgoritmo(11);
-	for(auto x: vectorAPintar){
-		xml->ModificarColor(x.first,x.second,"0");
-	}
+	Program* programaPrin = new Program();
+	programaPrin->iniciarPrograma();
 }

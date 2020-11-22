@@ -15,4 +15,4 @@ class LazinessXML{
         void escribirXML();
 };
 
-#endif "LAZINESSXML_H"
+#endif /*LAZINESSXML_H*/
