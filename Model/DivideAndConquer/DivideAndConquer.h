@@ -8,7 +8,7 @@ class DivideAndConquer : public ColoringAlgorithm {
         int cantidadColores;
     public:
         DivideAndConquer(GrafoPaises* PaisesAProcesar);
-        vector<NodoPais*> iniciarAlgoritmo(int);
-        vector<NodoPais*> dividirGrafo(vector<NodoPais*> vectorNodos);
+        vector<pair<string,string>> iniciarAlgoritmo(int);
+        vector<pair<string,string>> dividirGrafo(vector<NodoPais*> vectorNodos);
 };
 #endif

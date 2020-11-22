@@ -5,6 +5,7 @@
 #include <string>
 #include <math.h>
 #include "../String Parser/StringParser.h"
+#include <bits/stdc++.h>
 /**
  * Clase Nodo que almacena los datos del SVG
  */
