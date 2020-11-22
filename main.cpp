@@ -14,10 +14,6 @@ int main()
 	xml->iniciarParse();
 	GrafoPaises *g = xml->obtenerGrafo();
 	DivideAndConquer divide(g);
-	vector<NodoPais*> vectorR = divide.iniciarAlgoritmo(3);
-	/*for(auto x:vectorR){
-		xml->ModificarColor(x->idPais,x->colorPais);
-	}*/
-
+	vector<pair<string,string>> vectorAPintar = divide.iniciarAlgoritmo(7);
 
 }
