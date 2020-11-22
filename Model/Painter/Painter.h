@@ -1,17 +1,21 @@
 #ifndef PAINTER_H
 #define PAINTER_H
-
 class Painter{
-
     private:
-        // Lista de paises a procesar para pintar
-        int listaPaises;
+		vector<NodoPais*> listaPaises;								// Lista de paises a procesar para pintar
     public:
-        // Constructor
-        Painter();
-        // Funcion para pintar los paises
-        void pintar();
-        // Sintetizar la informacion que se llevara al XML
-        void sintetizarInfo();
+        Painter(vector<NodoPais*> pListaPaises);					// Constructor
+        void pintar(vector<pair<string,string>> pPaisesPintar);		// Funcion para pintar los paises
+        void sintetizarInfo();										// Sintetizar la informacion que se lguardara en el XML
 };
+
+Painter::Painter(vector<NodoPais*> pListaPaises){
+	listaPaises = pListaPaises;
+}
+
+void Painter::pintar(vector<pair<string,string>> pPaisesPintar){
+	int tamPaisesPintar = pPaisesPintar.size();
+	for(int indicePaisesPintar = 0; indicePaisesPintar < tamPaisesPintar; indicePaisesPintar++){
+	}
+}
 #endif
