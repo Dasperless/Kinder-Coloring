@@ -41,7 +41,7 @@ GrafoPaises* XMLParser::obtenerGrafo(){
  * Modifica el color del pais segun su ID.
  * Recibe como parametros el ID del pais y el color a colocar.
 */
-void XMLParser::ModificarColor(string pID, string color){
+void XMLParser::ModificarColor(string pID, string color, string archivo){
     pugi::xml_node svgNode = doc.child("svg");
     
     string colorNuevo = "fill:"+color+";fill-rule:evenodd";
@@ -52,5 +52,14 @@ void XMLParser::ModificarColor(string pID, string color){
             attr.set_value(colorNuevo.c_str());
         }
     }
-    doc.save_file(path,"\t",pugi::format_indent_attributes);
+    if(archivo == "0"){
+       doc.save_file("ArchivosXML/DivAndConq.svg","\t",pugi::format_indent_attributes);
+    }
+    else if(archivo == "1"){
+        doc.save_file("ArchivosXML/DynamicProg.svg","\t",pugi::format_indent_attributes);
+    }
+    else{
+        doc.save_file("ArchivosXML/Backtracking.svg","\t",pugi::format_indent_attributes);
+    }
+    
 }

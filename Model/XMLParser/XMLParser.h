@@ -18,7 +18,7 @@ class XMLParser{
         XMLParser(const char* pPath); // Constructor
         void iniciarParse(); // Parseo del archivo
         GrafoPaises* obtenerGrafo(); // Obtener el grafo de paises
-        void ModificarColor(string idPais, string color); // Modifica el color del pais segun el ID.
+        void ModificarColor(string idPais, string color,string archivo); // Modifica el color del pais segun el ID.
 };
 
 #endif /* XMLParser_H */
